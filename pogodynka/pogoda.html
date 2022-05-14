@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Demo fetch()</title>
+</head>
+
+<body>
+    <button id="przycisk">Pobierz prognozę pogody!</button>
+    <h2>Pogoda aktualna</h2>
+    <div class="pogodaAktualna">
+        <div>Temperatura: <span class="temp"></span></div>
+        <div>Zachmurzenie: <span class="zachmurzenie"></span></div>
+        <div>Kierunek Wiatru: <span class="kierunek_wiatru"></span></div>
+        <div>Opis: <span class="opis"></span></div>
+        <div> <span class="ikonka"></span></div>
+
+
+
+    </div>
+    <h2>Prognoza na jutro</h2>
+    <div class="pogodaJutro">
+        <div>Temperatura: <span class="tempjutro"></span></div>
+        <div>Zachmurzenie: <span class="zachmurzeniejutro"></span></div>
+        <div>Kierunek Wiatru: <span class="kierunek_wiatrujutro"></span></div>
+        <div>Opis: <span class="opisjutro"></span></div>
+        <div> <span class="ikonkajutro"></span></div>
+    </div>
+
+    <script>
+
+        function pobierzDane() {
+            document.querySelector(".ikonka").textContent = ' '
+            document.querySelector(".ikonkajutro").textContent = ' '
+
+            const api_url = 'https://www.wowapi.pl/pogoda/prognoza?miasto=warszawa'
+            async function pogoda() {
+                const res = await fetch(api_url)
+                const data = await res.json()
+                const { teraz } = data
+                document.querySelector('.temp').textContent = teraz.temperatura
+                document.querySelector('.zachmurzenie').textContent = teraz.zachmurzenie + ('%')
+                document.querySelector('.kierunek_wiatru').textContent = teraz.wiatrKierunek + (' ') + teraz.wiatrKierunekSłownie
+                document.querySelector('.opis').textContent = teraz.opis
+                let ikonka_api = teraz.ikonka
+                if (ikonka_api === 'slonce') {
+                    document.querySelector('.ikonka').innerHTML += '<img src = "slonce.png" width="50" height="50">'
+                }
+                if (ikonka_api === 'burza') {
+                    document.querySelector('.ikonka').innerHTML += '<img src = "burza.png" width="50" height="50">'
+                }
+                if (ikonka_api === 'chmury1') {
+                    document.querySelector('.ikonka').innerHTML += '<img src = "chmury1.png" width="50" height="50">'
+                }
+                if (ikonka_api === 'chmury2') {
+                    document.querySelector('.ikonka').innerHTML += '<img src = "chmury2.png" width="50" height="50">'
+                }
+                if (ikonka_api === 'chmury3') {
+                    document.querySelector('.ikonka').innerHTML += '<img src = "chmury3.png" width="50" height="50">'
+                }
+                if (ikonka_api === 'deszcz1') {
+                    document.querySelector('.ikonka').innerHTML += '<img src = "deszcz1.png" width="50" height="50">'
+                }
+                if (ikonka_api === 'deszcz2') {
+                    document.querySelector('.ikonka').innerHTML += '<img src = "deszcz2.png" width="50" height="50">'
+                }
+                if (ikonka_api === 'mgla') {
+                    document.querySelector('.ikonka').innerHTML += '<img src = "mgla.png" width="50" height="50">'
+                }
+                if (ikonka_api === 'snieg') {
+                    document.querySelector('.ikonka').innerHTML += '<img src = "snieg.png" width="50" height="50">'
+                }
+                if (ikonka_api === 'wiatr') {
+                    document.querySelector('.ikonka').innerHTML += '<img src = "wiatr.png" width="50" height="50">'
+                }
+
+            }
+            const api_url2 = 'https://www.wowapi.pl/pogoda/prognoza?miasto=warszawa'
+            async function pogodajutro() {
+                const res = await fetch(api_url2)
+                const data = await res.json()
+                const { prognoza } = data
+                console.log(prognoza)
+                document.querySelector('.tempjutro').textContent = prognoza.jutro.temperatura
+                document.querySelector('.zachmurzeniejutro').textContent = prognoza.jutro.zachmurzenie + ('%')
+                document.querySelector('.kierunek_wiatrujutro').textContent = prognoza.jutro.wiatrKierunek + (' ') + prognoza.jutro.wiatrKierunekSłownie
+                document.querySelector('.opisjutro').textContent = prognoza.jutro.opis
+                let ikonka_api_jutro = prognoza.jutro.ikonka
+                if (ikonka_api_jutro === 'slonce') {
+                    document.querySelector('.ikonkajutro').innerHTML += '<img src = "slonce.png" width="50" height="50">'
+                }
+                if (ikonka_api_jutro === 'burza') {
+                    document.querySelector('.ikonkajutro').innerHTML += '<img src = "burza.png" width="50" height="50">'
+                }
+                if (ikonka_api_jutro === 'chmury1') {
+                    document.querySelector('.ikonkajutro').innerHTML += '<img src = "chmury1.png" width="50" height="50">'
+                }
+                if (ikonka_api_jutro === 'chmury2') {
+                    document.querySelector('.ikonkajutro').innerHTML += '<img src = "chmury2.png" width="50" height="50">'
+                }
+                if (ikonka_api_jutro === 'chmury3') {
+                    document.querySelector('.ikonkajutro').innerHTML += '<img src = "chmury3.png" width="50" height="50">'
+                }
+                if (ikonka_api_jutro === 'deszcz1') {
+                    document.querySelector('.ikonkajutro').innerHTML += '<img src = "deszcz1.png" width="50" height="50">'
+                }
+                if (ikonka_api_jutro === 'deszcz2') {
+                    document.querySelector('.ikonkajutro').innerHTML += '<img src = "deszcz2.png" width="50" height="50">'
+                }
+                if (ikonka_api_jutro === 'mgla') {
+                    document.querySelector('.ikonkajutro').innerHTML += '<img src = "mgla.png" width="50" height="50">'
+                }
+                if (ikonka_api_jutro === 'snieg') {
+                    document.querySelector('.ikonkajutro').innerHTML += '<img src = "snieg.png" width="50" height="50">'
+                }
+                if (ikonka_api_jutro === 'wiatr') {
+                    document.querySelector('.ikonkajutro').innerHTML += '<img src = "wiatr.png" width="50" height="50">'
+                }
+
+
+            }
+            pogoda()
+            pogodajutro()
+
+        }
+
+
+
+
+        document.querySelector("#przycisk").addEventListener("click", pobierzDane);
+
+    </script>
+</body>
+
+</html>
