@@ -7,18 +7,15 @@
 </head>
 
 <body>
+
     <button id="przycisk">Pobierz prognozę pogody!</button>
     <h2>Pogoda aktualna</h2>
-    <div class="pogodaAktualna">
+    <div class="pogodaAktualna"></div>
         <div>Temperatura: <span class="temp"></span></div>
         <div>Zachmurzenie: <span class="zachmurzenie"></span></div>
         <div>Kierunek Wiatru: <span class="kierunek_wiatru"></span></div>
         <div>Opis: <span class="opis"></span></div>
         <div> <span class="ikonka"></span></div>
-
-
-
-    </div>
     <h2>Prognoza na jutro</h2>
     <div class="pogodaJutro">
         <div>Temperatura: <span class="tempjutro"></span></div>
@@ -81,7 +78,6 @@
                 const res = await fetch(api_url2)
                 const data = await res.json()
                 const { prognoza } = data
-                console.log(prognoza)
                 document.querySelector('.tempjutro').textContent = prognoza.jutro.temperatura
                 document.querySelector('.zachmurzeniejutro').textContent = prognoza.jutro.zachmurzenie + ('%')
                 document.querySelector('.kierunek_wiatrujutro').textContent = prognoza.jutro.wiatrKierunek + (' ') + prognoza.jutro.wiatrKierunekSłownie
@@ -122,12 +118,15 @@
             }
             pogoda()
             pogodajutro()
-
         }
-
-
-
-
+//         fetch('https://www.wowapi.pl/pogoda/miasta')
+//   .then(response => response.json())
+//   .then(danemiast => console.log(danemiast));
+//   for(let i = 0;i<danemiast.lenght;i++){
+//     {
+            
+            
+//         }}
         document.querySelector("#przycisk").addEventListener("click", pobierzDane);
 
     </script>
