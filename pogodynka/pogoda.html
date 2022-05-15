@@ -7,15 +7,17 @@
 </head>
 
 <body>
-
+    <select id='miastaselect'>
+        
+    </select>
     <button id="przycisk">Pobierz prognozę pogody!</button>
     <h2>Pogoda aktualna</h2>
     <div class="pogodaAktualna"></div>
-        <div>Temperatura: <span class="temp"></span></div>
-        <div>Zachmurzenie: <span class="zachmurzenie"></span></div>
-        <div>Kierunek Wiatru: <span class="kierunek_wiatru"></span></div>
-        <div>Opis: <span class="opis"></span></div>
-        <div> <span class="ikonka"></span></div>
+    <div>Temperatura: <span class="temp"></span></div>
+    <div>Zachmurzenie: <span class="zachmurzenie"></span></div>
+    <div>Kierunek Wiatru: <span class="kierunek_wiatru"></span></div>
+    <div>Opis: <span class="opis"></span></div>
+    <div> <span class="ikonka"></span></div>
     <h2>Prognoza na jutro</h2>
     <div class="pogodaJutro">
         <div>Temperatura: <span class="tempjutro"></span></div>
@@ -118,16 +120,38 @@
             }
             pogoda()
             pogodajutro()
+
         }
-//         fetch('https://www.wowapi.pl/pogoda/miasta')
-//   .then(response => response.json())
-//   .then(danemiast => console.log(danemiast));
-//   for(let i = 0;i<danemiast.lenght;i++){
-//     {
-            
-            
-//         }}
+        function PobierzlisteMiast() {
+            fetch('https://www.wowapi.pl/pogoda/miasta')
+                .then(function (odpowiedz) {
+                    odpowiedz.json().then(function (listamiast) {
+                        console.log(listamiast)
+                        for (let i = 0; i < listamiast.length; i++) {
+                            console.log(listamiast[i].nazwa)
+                            document.querySelector('#miastaselect').innerHTML += '<option>' + listamiast[i].nazwa + '</option>'
+                        }
+                    })
+                })
+        }
+        PobierzlisteMiast()
+
+
+
+
+
+        //         fetch('https://www.wowapi.pl/pogoda/miasta')
+        //   .then(response => response.json())
+        //   .then(danemiast => console.log(danemiast));
+        //   for(let i = 0;i<danemiast.lenght;i++){
+
+        //     {
+
+
+
+        //         }}
         document.querySelector("#przycisk").addEventListener("click", pobierzDane);
+
 
     </script>
 </body>
