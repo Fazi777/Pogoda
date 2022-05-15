@@ -136,20 +136,18 @@
         }
         PobierzlisteMiast()
 
+    function pobierzDanedla (){
+        document.querySelector('#miastaselect').addEventListener("change", pobierzDanedla)
+        
+        const api_url = 'https://www.wowapi.pl/pogoda/prognoza?miasto='
+            async function pogoda() {
+                const res = await fetch(api_url)
+                const data = await res.json()
+                const { teraz } = data
+
+    }}
 
 
-
-
-        //         fetch('https://www.wowapi.pl/pogoda/miasta')
-        //   .then(response => response.json())
-        //   .then(danemiast => console.log(danemiast));
-        //   for(let i = 0;i<danemiast.lenght;i++){
-
-        //     {
-
-
-
-        //         }}
         document.querySelector("#przycisk").addEventListener("click", pobierzDane);
 
 
