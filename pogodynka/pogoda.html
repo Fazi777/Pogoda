@@ -126,7 +126,6 @@
             fetch('https://www.wowapi.pl/pogoda/miasta')
                 .then(function (odpowiedz) {
                     odpowiedz.json().then(function (listamiast) {
-                        console.log(listamiast)
                         for (let i = 0; i < listamiast.length; i++) {
                             console.log(listamiast[i].nazwa)
                             document.querySelector('#miastaselect').innerHTML += '<option>' + listamiast[i].nazwa + '</option>'
@@ -138,8 +137,14 @@
 
     function pobierzDanedla (){
         document.querySelector('#miastaselect').addEventListener("change", pobierzDanedla)
-        
-        const api_url = 'https://www.wowapi.pl/pogoda/prognoza?miasto='
+        let selectElement = document.querySelector("#wybierajka");
+
+selectElement.addEventListener("change", function() {
+  console.log(selectElement.value);
+});
+
+        const api_url = 'https://www.wowapi.pl/pogoda/prognoza?miasto='+ selectElement.value
+        console.log(api_url)
             async function pogoda() {
                 const res = await fetch(api_url)
                 const data = await res.json()
