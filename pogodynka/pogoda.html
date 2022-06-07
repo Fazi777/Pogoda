@@ -1,16 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
-    <title>Demo fetch()</title>
+    <title>ppp</title>
 </head>
 
 <body>
     <select id='miastaselect'>
-        
+
     </select>
     <button id="przycisk">Pobierz prognozę pogody!</button>
+    <div>
+        <img src="Iphone-spinner-2.gif" id="loader" class="invisible">
+    </div>
     <h2>Pogoda aktualna</h2>
     <div class="pogodaAktualna"></div>
     <div>Temperatura: <span class="temp"></span></div>
@@ -26,14 +30,51 @@
         <div>Opis: <span class="opisjutro"></span></div>
         <div> <span class="ikonkajutro"></span></div>
     </div>
-
+    <style>
+        .invisible{
+            display: none;
+        }
+    </style>
     <script>
+        function loader_on (){
+            document.querySelector("#loader").classList.remove("invisible")
+        }
+        function loader_off(){
+            document.querySelector("#loader").classList.add("invisible")
+        }
+       
+        let miasto = []
+        let wybrane_miasto = 'Białystok'
+        
+        function PobierzlisteMiast() {
+            fetch('https://www.wowapi.pl/pogoda/miasta')
+                .then(function (odpowiedz) {
+                    odpowiedz.json().then(function (listamiast) {
+                        for (let i = 0; i < listamiast.length; i++) {
+                            document.querySelector('#miastaselect').innerHTML += '<option>' + listamiast[i].nazwa + '</option>'
+                        }
+                    })
+                })
+                
+        }
+        PobierzlisteMiast()
+        function pobierzDanedla() {
+            document.querySelector('#miastaselect').addEventListener("change", pobierzDanedla)
+            let selectElement = document.querySelector("#miastaselect");
 
+            selectElement.addEventListener("change", () => {
+                wybrane_miasto = selectElement.value
+                console.log(wybrane_miasto)
+                return wybrane_miasto
+            });
+        }
+        pobierzDanedla()
         function pobierzDane() {
+           
             document.querySelector(".ikonka").textContent = ' '
             document.querySelector(".ikonkajutro").textContent = ' '
 
-            const api_url = 'https://www.wowapi.pl/pogoda/prognoza?miasto=warszawa'
+            const api_url = 'https://www.wowapi.pl/pogoda/prognoza?miasto='+ wybrane_miasto
             async function pogoda() {
                 const res = await fetch(api_url)
                 const data = await res.json()
@@ -75,7 +116,7 @@
                 }
 
             }
-            const api_url2 = 'https://www.wowapi.pl/pogoda/prognoza?miasto=warszawa'
+            const api_url2 = 'https://www.wowapi.pl/pogoda/prognoza?miasto='+wybrane_miasto
             async function pogodajutro() {
                 const res = await fetch(api_url2)
                 const data = await res.json()
@@ -85,6 +126,7 @@
                 document.querySelector('.kierunek_wiatrujutro').textContent = prognoza.jutro.wiatrKierunek + (' ') + prognoza.jutro.wiatrKierunekSłownie
                 document.querySelector('.opisjutro').textContent = prognoza.jutro.opis
                 let ikonka_api_jutro = prognoza.jutro.ikonka
+              
                 if (ikonka_api_jutro === 'slonce') {
                     document.querySelector('.ikonkajutro').innerHTML += '<img src = "slonce.png" width="50" height="50">'
                 }
@@ -116,47 +158,17 @@
                     document.querySelector('.ikonkajutro').innerHTML += '<img src = "wiatr.png" width="50" height="50">'
                 }
 
-
+                loader_off()
             }
             pogoda()
             pogodajutro()
-
+            
         }
-        function PobierzlisteMiast() {
-            fetch('https://www.wowapi.pl/pogoda/miasta')
-                .then(function (odpowiedz) {
-                    odpowiedz.json().then(function (listamiast) {
-                        for (let i = 0; i < listamiast.length; i++) {
-                            console.log(listamiast[i].nazwa)
-                            document.querySelector('#miastaselect').innerHTML += '<option>' + listamiast[i].nazwa + '</option>'
-                        }
-                    })
-                })
-        }
-        PobierzlisteMiast()
-
-    function pobierzDanedla (){
-        document.querySelector('#miastaselect').addEventListener("change", pobierzDanedla)
-        let selectElement = document.querySelector("#wybierajka");
-
-selectElement.addEventListener("change", function() {
-  console.log(selectElement.value);
-});
-
-        const api_url = 'https://www.wowapi.pl/pogoda/prognoza?miasto='+ selectElement.value
-        console.log(api_url)
-            async function pogoda() {
-                const res = await fetch(api_url)
-                const data = await res.json()
-                const { teraz } = data
-
-    }}
-
-
         document.querySelector("#przycisk").addEventListener("click", pobierzDane);
-
-
+        document.querySelector("#przycisk").addEventListener("click",  loader_on)
     </script>
 </body>
 
 </html>
+
+
